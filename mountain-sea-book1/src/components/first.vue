@@ -1,17 +1,24 @@
 <template>
-  <div id="img3"></div>
+  <div id="first">
+    <button id="toMain" @click="toMainPage"></button>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {};
   },
+  methods: {
+    toMainPage() {
+      this.$router.push("/main");
+    },
+  },
 };
 </script>
 <style>
-#img3 {
+#first {
   /* 设置背景图片 */
-  background-image: url("src/img/3.jpg");
+  background-image: url("src/img/first/山水图+带背景.png");
 
   /* 设置背景图片覆盖整个元素 */
   background-size: cover;
@@ -29,5 +36,15 @@ export default {
   justify-content: center; /* 水平居中内容 */
   align-items: center; /* 垂直居中内容 */
   position: relative; /* 添加相对定位 */
+}
+#toMain {
+  background-image: url("src/img/first/主题字.png");
+  background-size: cover; /* 确保图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
+  border: none; /* 移除按钮的边框 */
+  cursor: pointer; /* 鼠标悬停时变为手型 */
+  /* 根据需要添加更多的样式，比如宽度、高度、边距等 */
+  width: 100px; /* 示例宽度 */
+  height: 50px; /* 示例高度 */
 }
 </style>

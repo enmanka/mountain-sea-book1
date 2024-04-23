@@ -1,8 +1,9 @@
 <template>
   <div id="img4"></div>
 </template>
-<script>
-</script>
+
+<script></script>
+
 <style>
 #img4 {
   /* 设置背景图片 */

@@ -1,5 +1,8 @@
 <template>
   <div id="main" @mousemove="handleMouseMove">
+    <img id="muLu" :src="muLuSrc"></img>
+    <img id="muLuSmall" :src="muLuSmallSrc"></img>
+    <img id="biaoTi" :src="biaoTiSrc"></img>
     <button :class="buttonClass1" @click="goPage('/vue1')"></button>
     <button :class="buttonClass2" @click="goPage('/vue2')"></button>
     <button :class="buttonClass3" @click="goPage('/vue3')"></button>
@@ -12,6 +15,9 @@
 export default {
   data() {
     return {
+      biaoTiSrc: "src/img/main/帝禹洪荒.png",
+      muLuSrc: "src/img/main/目录框.png",
+      muLuSmallSrc: "src/img/main/小标题.png",
       buttonClass1: "c1",
       buttonClass2: "c2",
       buttonClass3: "c3",
@@ -36,7 +42,7 @@ export default {
 <style>
 #main {
   /* 设置背景图片 */
-  background-image: url("src/img/main.jpg");
+  background-image: url("src/img/main/背景1.png");
 
   /* 设置背景图片覆盖整个元素 */
   background-size: cover;
@@ -55,31 +61,51 @@ export default {
   align-items: center; /* 垂直居中内容 */
   position: relative; /* 添加相对定位 */
 }
+#biaoTi {
+  position: absolute; /* 或使用 relative, fixed, sticky 等值 */
+  top: 1%; /* 距离容器顶部的距离 */
+  left: 5%; /* 距离容器左侧的距离 */
+  width: 20%; /* 图片的宽度 */
+  height: 66%; /* 图片的高度 */
+}
+#muLu {
+  position: absolute; /* 或使用 relative, fixed, sticky 等值 */
+  top: 20%; /* 距离容器顶部的距离 */
+  left: 40%; /* 距离容器左侧的距离 */
+  width: 50%; /* 图片的宽度 */
+  height: 60%; /* 图片的高度 */
+}
+#muLuSmall {
+  position: absolute; /* 或使用 relative, fixed, sticky 等值 */
+  top: 24%; /* 距离容器顶部的距离 */
+  left: 20%; /* 距离容器左侧的距离 */
+  width: 16%; /* 图片的宽度 */
+  height: 60%; /* 图片的高度 */
+}
 .c1 {
-  /* width: 56px;
-  height: 214px; */
-  /* width: 7%;
-  height: 32.3%; */
-  width: 5vw;
-  height: 35vh;
+  background-image: url("src/img/main/山川海泽.png");
+  background-size: cover; /* 确保图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
   /* 设置透明背景颜色 */
   background-color: transparent;
+  width: 5vw;
+  height: 35vh;
 
-  /* 设置位置，这里使用绝对定位作为例子 803 663*/
   position: absolute;
-  /* top: 242px;
-  left: 418px; */
   top: 33%;
   left: 49.5%;
 
   /* 其他可选样式 */
-  padding: 10px 20px; /* 内边距 */
-  border: none; /* 无边框 */
-  color: white; /* 文本颜色 */
-  font-size: 100px; /* 字体大小 */
+  border: none; /* 移除边框 */
+  padding: 0; /* 移除内边距 */
+  margin: 0; /* 移除外边距 */
+  overflow: hidden; /* 隐藏超出按钮尺寸的图片部分 */
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c2 {
+  background-image: url("src/img/main/鱼虫鸟兽.png");
+  background-size: cover; /* 确保图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
   width: 5vw;
   height: 35vh;
   /* 设置透明背景颜色 */
@@ -92,11 +118,12 @@ export default {
   /* 其他可选样式 */
   padding: 10px 20px; /* 内边距 */
   border: none; /* 无边框 */
-  color: white; /* 文本颜色 */
-  font-size: 100px; /* 字体大小 */
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c3 {
+  background-image: url("src/img/main/神灵祭仪.png");
+  background-size: cover; /* 确保图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
   width: 5vw;
   height: 35vh;
   /* 设置透明背景颜色 */
@@ -114,6 +141,9 @@ export default {
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c4 {
+  background-image: url("src/img/main/源远流长.png");
+  background-size: cover; /* 确保图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
   width: 5vw;
   height: 35vh;
   /* 设置透明背景颜色 */
