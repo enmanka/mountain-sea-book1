@@ -1,5 +1,5 @@
 <template>
-  <div id="first">
+  <div id="f">
     <button id="toMain" @click="toMainPage"></button>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 };
 </script>
 <style>
-#first {
+#f {
   /* 设置背景图片 */
   background-image: url("src/img/first/山水图+带背景.png");
 
@@ -42,9 +42,9 @@ export default {
   background-size: cover; /* 确保图片覆盖整个按钮 */
   background-position: center; /* 图片居中显示 */
   border: none; /* 移除按钮的边框 */
-  cursor: pointer; /* 鼠标悬停时变为手型 */
+
   /* 根据需要添加更多的样式，比如宽度、高度、边距等 */
-  width: 100px; /* 示例宽度 */
-  height: 50px; /* 示例高度 */
+  width: 400px; 
+  height: 200px; 
 }
 </style>

@@ -7,14 +7,17 @@ import Vue4 from '../components/4.vue';
 import Vue5 from '../components/5.vue';
 import Vue6 from '../components/6.vue';
 import Main from '../components/main.vue';
-
+import shan from '../components/page1.vue';
+import page2 from '../components/page2.vue';
+import page3 from '../components/page3.vue';
+import page4 from '../components/page4.vue';
 const routes = [
     { path: '/', component: DefaultComponent },
     { path: '/main', component: Main },
-    { path: '/vue1', component: Vue1 },
-    { path: '/vue2', component: Vue2 },
-    { path: '/vue3', component: Vue3 },
-    { path: '/vue4', component: Vue4 },
+    { path: '/vue1', component: shan },
+    { path: '/vue2', component: page2 },
+    { path: '/vue3', component: page3 },
+    { path: '/vue4', component: page4 },
     { path: '/vue5', component: Vue5 },
     { path: '/vue6', component: Vue6 },
 ];
