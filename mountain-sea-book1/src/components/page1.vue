@@ -17,7 +17,7 @@
             </el-header>
             
             <el-main>
-              <figure12></figure12>
+              <figure14/>
             </el-main>
           </el-container>
 
@@ -32,6 +32,8 @@
 import index1 from './index1.vue';
 import figure11 from './figure11.vue';
 import figure12 from './figure12.vue';
+import figure14 from './figure14.vue';
+import figure15 from './figure15.vue';
 export default{
     data()
     {return{
@@ -41,24 +43,21 @@ export default{
       index1,
       figure11,
       figure12,
+      figure14,
+      figure15
     },
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .img1{
-  /* 设置背景图片 */
-  background-image: url("src/img/1/background.png");
 
-  /*设置背景图片覆盖整个元素*/
+  background-image: url("src/img/1/background.png");
   background-size: cover;
   background-position: center;
-
-  /* 设置元素的高度和宽度，确保它覆盖整个web界面 */
   height: 100vh; /* 视口高度 */
   width: 100vw; /* 视口宽度 */
 
-  /* 为了防止页面滚动，移除默认的外边距 */
   margin: 0;
   padding: 0%;
 
@@ -67,7 +66,7 @@ export default{
     height: 100%;
     .el-aside{
       .el-header{
-        height: 200px;
+        height: 100px;
       }
     }
     .el-container{
