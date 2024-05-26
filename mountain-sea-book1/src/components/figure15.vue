@@ -9,65 +9,33 @@ import * as d3 from 'd3';
 export default {
   data() {
     return {
-      ddata: [
-        {
-          "Almost Certainly": "95",
-          "Highly Likely": "80",
-          "Very Good Chance": "85",
-          "Probable": "75",
-          "Likely": "66",
-          "Probably": "75",
-          "We Believe": "66",
-          "Better Than Even": "55",
-          "About Even": "50",
-          "We Doubt": "40",
-          "Improbable": "20",
-          "Unlikely": "30",
-          "Probably Not": "15",
-          "Little Chance": "20",
-          "Almost No Chance": "5",
-          "Highly Unlikely": "25",
-          "Chances Are Slight": "25"
-        },
-        {
-          "Almost Certainly": "95",
-          "Highly Likely": "75",
-          "Very Good Chance": "75",
-          "Probable": "51",
-          "Likely": "75",
-          "Probably": "51",
-          "We Believe": "51",
-          "Better Than Even": "51",
-          "About Even": "50",
-          "We Doubt": "20",
-          "Improbable": "49",
-          "Unlikely": "25",
-          "Probably Not": "49",
-          "Little Chance": "5",
-          "Almost No Chance": "5",
-          "Highly Unlikely": "10",
-          "Chances Are Slight": "5"
-        },
-        {
-          "Almost Certainly": "95",
-          "Highly Likely": "85",
-          "Very Good Chance": "85",
-          "Probable": "70",
-          "Likely": "75",
-          "Probably": "70",
-          "We Believe": "80",
-          "Better Than Even": "60",
-          "About Even": "50",
-          "We Doubt": "30",
-          "Improbable": "10",
-          "Unlikely": "25",
-          "Probably Not": "25",
-          "Little Chance": "20",
-          "Almost No Chance": "1",
-          "Highly Unlikely": "5",
-          "Chances Are Slight": "15"
-        }
-      ]
+      data2:[
+        {"mount1":"10","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"9","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"8","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"8","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"8","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"20","mount7":"60","mount8":"50", },
+        {"mount1":"8","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"10","mount7":"60","mount8":"50", },
+        {"mount1":"7","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"7","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"7","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"4","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"5","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"6","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"7","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        {"mount1":"8","mount2":"80","mount3":"40","mount4":"70","mount5":"90","mount6":"30","mount7":"60","mount8":"50", },
+        
+      ],
     }
   },
   mounted() {
@@ -90,10 +58,10 @@ export default {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // read data
-      var data = this.ddata;
+      var data = this.data2;
 
       // Get the different categories and count them
-      var categories = ["Almost Certainly", "Very Good Chance", "We Believe", "Likely", "About Even", "Little Chance", "Chances Are Slight", "Almost No Chance"];
+      var categories = ["mount1", "mount2","mount3","mount4","mount5","mount6","mount7","mount8"];
       var n = categories.length;
 
       // Compute the mean of each group
@@ -111,20 +79,13 @@ export default {
 
       // Add X axis
       var x = d3.scaleLinear()
-        .domain([-10, 120])
+        .domain([0,100])
         .range([0, width]);
       svg.append("g")
         .attr("class", "xAxis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickValues([0, 25, 50, 75, 100]).tickSize(-height))
         .select(".domain").remove();
-
-      // Add X axis label:
-      svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", width)
-        .attr("y", height + 40)
-        .text("Probability (%)");
 
       // Create a Y scale for densities
       var y = d3.scaleLinear()
@@ -141,7 +102,7 @@ export default {
         .select(".domain").remove();
 
       // Compute kernel density estimation for each column:
-      var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40)); // increase this 40 for more accurate density.
+      var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(10)); // increase this 40 for more accurate density.
       var allDensity = [];
       for (var i = 0; i < n; i++) {
         var key = categories[i];
@@ -154,7 +115,7 @@ export default {
         .data(allDensity)
         .enter()
         .append("path")
-        .attr("transform", function (d) { return "translate(0," + (yName(d.key) - height) + ")" })
+        .attr("transform", function (d) { return "translate(0," - height + ")" })
         .attr("fill", function (d) {
           var grp = d.key;
           var index = categories.indexOf(grp);

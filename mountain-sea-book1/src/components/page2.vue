@@ -1,7 +1,7 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="400px">
+          <el-aside width="300px">
               <el-header><index2/></el-header>
               <el-main>
               </el-main>
