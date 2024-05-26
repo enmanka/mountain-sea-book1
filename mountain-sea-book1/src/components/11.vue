@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" style="width: 600px; height: 400px"></div>
+  <div ref="chart" style="width: 150%; height: 600px; left: -150px"></div>
 </template>
 
 <script>
@@ -62,7 +62,16 @@ export default {
         circleData.push({
           value: [x, -2],
           index: circleCount + circleCount1 + i,
-          name: `Circle${i}`,
+          name: `小圆${i}`,
+          label: {
+            show: true,
+            position: "bottom",
+            distance: 20, // 标签与点的距离，增加距离使标签向下移动
+            rotate: -90, // 旋转标签，使标签垂直于点
+            formatter: "{b}", // 显示名称
+            fontSize: 10, // 字体大小
+            color: "#000", // 字体颜色
+          },
         });
 
         // 随机选择底部小圆和下边缘小圆之间连线
@@ -77,7 +86,7 @@ export default {
           {
             value: circleData[bottomEdgeCircleIndex].value,
             index: bottomEdgeCircleIndex,
-            hidden: true,
+            hidden: true, // 默认隐藏
           },
         ]);
       }
@@ -104,16 +113,17 @@ export default {
             },
           },
           {
+            id: "lines", // 为lines系列添加唯一的id
             type: "lines",
             coordinateSystem: "cartesian2d",
             data: lineData.map((line) => ({
               coords: [line[0].value, line[1].value],
               lineStyle: {
-                color: "#00f",
+                color: line[1].hidden ? "transparent" : "#00f",
               },
               emphasis: {
                 lineStyle: {
-                  color: "#00ff00",
+                  color: line[1].hidden ? "transparent" : "#00ff00",
                   width: 3,
                 },
               },
@@ -128,6 +138,87 @@ export default {
       };
 
       myChart.setOption(option);
+
+      // 监听鼠标点击事件
+      myChart.on("click", (params) => {
+        const dataIndex = params.dataIndex;
+        const seriesType = params.seriesType;
+
+        if (seriesType === "scatter" && params.seriesIndex === 0) {
+          const currentCircle = circleData[dataIndex];
+          const currentCircleIndex = currentCircle.index;
+
+          // 判断点击的是下边缘小圆
+          if (
+            currentCircleIndex >= circleCount &&
+            currentCircleIndex < circleCount + circleCount1
+          ) {
+            // 下边缘小圆点击事件处理
+            lineData.forEach((line) => {
+              if (line[1].index === currentCircleIndex) {
+                line[1].hidden = false; // 显示当前连线
+              } else if (
+                line[1].index >= circleCount &&
+                line[1].index < circleCount + circleCount1
+              ) {
+                line[1].hidden = true; // 隐藏其他下边缘小圆的连线
+              }
+            });
+
+            // 重新设置图表选项以显示新的线段
+            myChart.setOption({
+              series: [
+                {
+                  id: "lines",
+                  data: lineData.map((line) => ({
+                    coords: [line[0].value, line[1].value],
+                    lineStyle: {
+                      color: line[1].hidden ? "transparent" : "#00f",
+                    },
+                    emphasis: {
+                      lineStyle: {
+                        color: line[1].hidden ? "transparent" : "#00ff00",
+                        width: 3,
+                      },
+                    },
+                  })),
+                },
+              ],
+            });
+          }
+
+          // 判断点击的是底部小圆
+          if (currentCircleIndex >= circleCount + circleCount1) {
+            // 底部小圆点击事件处理
+            lineData.forEach((line) => {
+              if (line[0].index === currentCircleIndex) {
+                line[1].hidden = false; // 显示当前连线
+              }
+            });
+
+            // 重新设置图表选项以显示新的线段
+            myChart.setOption({
+              series: [
+                {
+                  id: "lines",
+                  data: lineData.map((line) => ({
+                    coords: [line[0].value, line[1].value],
+                    lineStyle: {
+                      color: line[1].hidden ? "transparent" : "#00f",
+                    },
+                    emphasis: {
+                      lineStyle: {
+                        color: line[1].hidden ? "transparent" : "#00ff00",
+                        width: 3,
+                      },
+                    },
+                  })),
+                },
+              ],
+            });
+          }
+        }
+      });
 
       // 监听鼠标悬停事件
       myChart.on("mouseover", (params) => {
@@ -144,7 +235,7 @@ export default {
             dataIndex: dataIndex,
           });
 
-          lineData.forEach((line) => {
+          lineData.forEach((line, index) => {
             if (line[0].index === currentCircle.index) {
               // 突出显示线段的另一端散点
               myChart.dispatchAction({
@@ -157,7 +248,7 @@ export default {
               myChart.dispatchAction({
                 type: "highlight",
                 seriesIndex: 1,
-                dataIndex: lineData.indexOf(line),
+                dataIndex: index,
               });
             }
           });
@@ -177,7 +268,7 @@ export default {
             dataIndex: dataIndex,
           });
 
-          lineData.forEach((line) => {
+          lineData.forEach((line, index) => {
             if (line[0].index === circleData[dataIndex].index) {
               // 取消突出显示线段的另一端散点
               myChart.dispatchAction({
@@ -190,7 +281,7 @@ export default {
               myChart.dispatchAction({
                 type: "downplay",
                 seriesIndex: 1,
-                dataIndex: lineData.indexOf(line),
+                dataIndex: index,
               });
             }
           });

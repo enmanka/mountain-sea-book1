@@ -1,6 +1,7 @@
 <template>
-        <div id="chart-container"></div>
+  <div id="chart-container"></div>
 </template>
+
 <script>
 import * as d3 from "d3";
 
@@ -10,27 +11,128 @@ export default {
       name: "flare",
       children: [
         {
-          name: "analytics",
+          name: "南山",
+          value1: 17,
           children: [
-            { name: "cluster", value: 70 },
-            { name: "graph", value: 65 },
-            { name: "optimization", value: 80 },
+            {
+              name: "狌狌",
+              value: 6,
+              more: "有兽焉，其状如禺而白耳，伏行人走，食之善走",
+            },
+            {
+              name: "鹿蜀",
+              value: 6,
+              more: "有兽焉，其状如马而白首，其文如虎而赤尾，其音如谣，佩之宜子孙",
+            },
+            {
+              name: "灌灌",
+              value: 5,
+              more: "有鸟焉，其状如鸠，其音如呵，佩之不惑",
+            },
           ],
         },
         {
-          name: "vis",
+          name: "北山",
+          value1: 63,
           children: [
-            { name: "axis", value: 30 },
-            { name: "color", value: 20 },
-            { name: "scale", value: 40 },
+            {
+              name: "天马",
+              value: 15,
+              more: "有兽焉，其状如白犬而黑头，见人则飞，其鸣自訆",
+            },
+            {
+              name: "[月雚]疏",
+              value: 16,
+              more: "有兽焉，其状如马，一角有错，可以辟火",
+            },
+            {
+              name: "耳鼠",
+              value: 16,
+              more: "有兽焉，其状如鼠，而菟首麋身，其音如獋犬，以其尾飞，食之不[月采]，又可以御百毒",
+            },
+            {
+              name: "滑鱼",
+              value: 16,
+              more: "有鱼焉，其状如[鱼单]，赤背，其音如梧，食之已疣",
+            },
           ],
         },
         {
-          name: "data",
+          name: "东山",
+          value1: 20,
           children: [
-            { name: "converters", value: 60 },
-            { name: "DataUtil", value: 50 },
-            { name: "DataSet", value: 40 },
+            {
+              name: "从从",
+              value: 6,
+              more: "有兽焉，其状如犬，六足，其鸣自詨",
+            },
+            {
+              name: "蠪侄",
+              value: 7,
+              more: "有兽焉，其状如狐，而九尾、九首、虎爪，其音如婴儿，是食人",
+            },
+            {
+              name: "鬿誉",
+              value: 7,
+              more: "有鸟焉，其状如鸡而白首，鼠足而虎爪，亦食人",
+            },
+          ],
+        },
+        {
+          name: "西山",
+          value1: 73,
+          children: [
+            {
+              name: "虫遗",
+              value: 14,
+              more: "有蛇焉，六足四翼，见则天下大旱",
+            },
+            {
+              name: "肥遗",
+              value: 14,
+              more: "有鸟焉，其状如鹑，黄身而赤喙，食之已疠，可以杀虫",
+            },
+            {
+              name: "举父",
+              value: 15,
+              more: "有兽焉，其状如禺而文臂，豹尾而善投，名曰举父",
+            },
+            {
+              name: "䳋渠",
+              value: 15,
+              more: "有鸟焉，其状如山鸡，黑身赤足，可以已[月暴]",
+            },
+            {
+              name: "羬羊",
+              value: 15,
+              more: "有兽焉，其状如羊而马尾，其脂可以已腊",
+            },
+          ],
+        },
+        {
+          name: "中山",
+          value1: 67,
+          children: [
+            {
+              name: "蠪蚔",
+              value: 16,
+              more: "有兽焉，其状如彘而有角，其音如号，食之不眯",
+            },
+            {
+              name: "鴢",
+              value: 17,
+              more: "有鸟焉，其状如凫，青身而朱目赤尾，食之宜子",
+            },
+            {
+              name: "跂踵",
+              value: 17,
+              more: "有鸟焉，其状如鸮，而一足彘尾，见则其国大疫",
+            },
+            {
+              name: "狙如",
+              value: 17,
+              more: "有兽焉，状如鼣鼠，白耳白喙，见则其国有大兵",
+            },
           ],
         },
       ],
@@ -48,6 +150,7 @@ export default {
       .hierarchy(data)
       .sum((d) => d.value)
       .sort((a, b) => b.value - a.value);
+
     const root = d3.partition().size([2 * Math.PI, hierarchy.height + 1])(
       hierarchy
     );
@@ -57,8 +160,8 @@ export default {
       .arc()
       .startAngle((d) => d.x0)
       .endAngle((d) => d.x1)
-      .padAngle((d) => Math.min((d.x1 - d.x0) / 2, 0.005))
-      .padRadius(radius * 1.5)
+      .padAngle(0.005) // 减小 padAngle 的值来减少扇形之间的间隙
+      .padRadius(radius * 0.8) // 减小 padRadius 的值来减少边界与扇形之间的间隙
       .innerRadius((d) => d.y0 * radius)
       .outerRadius((d) => Math.max(d.y0 * radius, d.y1 * radius - 1));
 
@@ -81,22 +184,61 @@ export default {
         arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0
       )
       .attr("pointer-events", (d) => (arcVisible(d.current) ? "auto" : "none"))
-      .attr("d", (d) => arc(d.current));
+      .attr("d", (d) => arc(d.current))
+      .on("mouseover", function (event, d) {
+        const centerText = d3.select("#center-text");
+        if (clickedOuterArc) {
+          const moreText = d.data.more || "";
+          const lines = moreText.split("，");
+          centerText.html(""); // 清空之前的内容
+
+          lines.forEach((line, index) => {
+            centerText
+              .append("tspan")
+              .attr("x", 0)
+              .attr("dy", index === 0 ? "-0.3em" : "1em") // 使用负的dy值来向上移动第一行文字
+              .attr("y", (index - (lines.length - 1) / 2) * 30) // 根据行数动态计算y坐标
+              .attr("font-size", "30px") // 修改字体大小
+              .text(line);
+          });
+        } else {
+          if (d.depth === 1) {
+            // 添加第一行文本
+            centerText
+              .append("tspan")
+              .attr("x", 0)
+              .attr("dy", "-1em") // 第一行文本向上偏移一定距离
+              .attr("font-size", "30px") // 设置字体大小
+              .text(`山名: ${d.data.name}`);
+
+            // 添加第二行文本
+            centerText
+              .append("tspan")
+              .attr("x", 0)
+              .attr("font-size", "30px") // 设置字体大小
+              .attr("dy", "3em") // 第二行文本向下偏移一定距离
+              .text(`种类数量: ${d.data.value1}`);
+          } else {
+            centerText.text(d.data.name);
+          }
+        }
+        d3.select(this).attr("stroke", "#000").attr("stroke-width", 2);
+      })
+
+      .on("mouseout", function () {
+        d3.select("#center-text").text("");
+        d3.select(this).attr("stroke", null);
+      });
 
     path
-      .filter((d) => d.children)
+      .filter((d) => d.children && d.depth === 1)
       .style("cursor", "pointer")
-      .on("click", clicked);
+      .on("click", function (event, d) {
+        clickedOuterArc = true;
+        clicked(event, d);
+      });
 
     const format = d3.format(",d");
-    path.append("title").text(
-      (d) =>
-        `${d
-          .ancestors()
-          .map((d) => d.data.name)
-          .reverse()
-          .join("/")}\n${format(d.value)}`
-    );
 
     const label = svg
       .append("g")
@@ -107,10 +249,18 @@ export default {
       .data(root.descendants().slice(1))
       .join("text")
       .attr("dy", "0.35em")
-      .attr("font-size", "20px") // 设置字体大小
+      .attr("font-size", "40px") // 设置字体大小
       .attr("fill-opacity", (d) => +labelVisible(d.current))
       .attr("transform", (d) => labelTransform(d.current))
       .text((d) => d.data.name);
+
+    // Add center text element for displaying hovered node info
+    svg
+      .append("text")
+      .attr("id", "center-text")
+      .attr("text-anchor", "middle")
+      .attr("dy", "0.35em")
+      .attr("font-size", "40px");
 
     const parent = svg
       .append("circle")
@@ -118,7 +268,12 @@ export default {
       .attr("r", radius)
       .attr("fill", "none")
       .attr("pointer-events", "all")
-      .on("click", clicked);
+      .on("click", function () {
+        clickedOuterArc = false;
+        clicked(null, root);
+      });
+
+    let clickedOuterArc = false;
 
     function clicked(event, p) {
       parent.datum(p.parent || root);
@@ -181,3 +336,17 @@ export default {
   },
 };
 </script>
+
+
+<style>
+.tooltip {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  background: lightgray;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  pointer-events: none;
+  display: none;
+}
+</style>

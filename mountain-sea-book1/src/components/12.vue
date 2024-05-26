@@ -1,10 +1,10 @@
 <template>
-  <div :id="chartId"></div>
-  <img src="../img/1/山海经分为.png" class="pic" />
+  <div id="chartContainer"></div>
 </template>
 
 <script>
 import * as d3 from "d3";
+
 export default {
   data() {
     return {
@@ -19,7 +19,6 @@ export default {
   methods: {
     goPage(path) {
       this.$router.push(path);
-      //console.log(this.$router.push(path));
     },
     generateAlphabetData() {
       const alphabet = ["铜", "金", "玉石", "铁", "银"];
@@ -150,7 +149,8 @@ export default {
 </script>
 
 <style scoped>
-.pic {
-  padding-top: 300px;
+#chartContainer {
+  max-width: 100%;
+  height: auto;
 }
 </style>

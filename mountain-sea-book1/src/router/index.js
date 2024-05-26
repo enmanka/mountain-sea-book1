@@ -10,6 +10,7 @@ import Vue8 from '../components/8.vue';
 import Vue9 from '../components/9.vue';
 import Vue10 from '../components/10.vue';
 import Vue11 from '../components/11.vue';
+import Vue12 from '../components/12.vue';
 import Main from '../components/main.vue';
 import shan from '../components/page1.vue';
 import page2 from '../components/page2.vue';
@@ -28,6 +29,7 @@ const routes = [
     { path: '/vue9', component: Vue9 },
     { path: '/vue10', component: Vue10 },
     { path: '/vue11', component: Vue11 },
+    { path: '/vue12', component: Vue12 },
 ];
 
 const router = createRouter({
