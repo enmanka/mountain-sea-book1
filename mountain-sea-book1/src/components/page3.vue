@@ -1,30 +1,19 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="250px">
+          <el-aside width="400px">
               <el-header><index3/></el-header>
               <el-main>
               </el-main>
           </el-aside>
 
           <el-container >
-            <el-aside width="600px">
-              <el-header>
-                <img src="../img/3/神话人物及其分类.png">
-              </el-header>
-              <el-main>
-                <pic11/>
-              </el-main>
-          </el-aside>
-
-          <el-aside width="600px">
-              <el-header>
-                <img src="../img/3/氏族信息.png">
-              </el-header>
-              <el-main>
-                <pic9/>
-              </el-main>
-          </el-aside>
+            <el-header class="head2">
+              <img src="../img/3/神话人物及其分类.png">
+            </el-header>
+            <el-main>
+              <figure3></figure3>
+            </el-main>
           </el-container>
 
         </el-container>
@@ -37,8 +26,7 @@
 <script>
 import index3 from './index3.vue';
 import figure3 from './figure3.vue';
-import pic11 from './11.vue';
-import pic9 from './9.vue';
+// import figure12 from './figure12.vue';
 export default{
     data()
     {return{
@@ -47,8 +35,6 @@ export default{
     components:{
       index3,
       figure3,
-      pic11,
-      pic9,
     //   figure12,
     },
 }
@@ -80,7 +66,6 @@ export default{
       }
     }
     .el-container{
-      margin-top: 20px;
       .el-header{
         height: 50px;
       }

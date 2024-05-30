@@ -25,6 +25,7 @@ export default {
 
       const circleData = [];
       const lineData = [];
+      const textData = [];
 
       // 生成半圆上半部分的小圆数据
       for (let i = 0; i < circleCount; i++) {
@@ -33,7 +34,25 @@ export default {
         const y = 3 * Math.sin(angle);
 
         if (y >= 0) {
-          circleData.push({ value: [x, y], index: i, name: `Circle${i}` });
+          const textX = x * 1.2; // 调整文本位置，放在小圆外面
+          const textY = y * 1.2;
+          circleData.push({
+            value: [x, y],
+            index: i,
+            name: `小圆${i}`,
+            label: {
+              show: true,
+              position: [textX, textY],
+              align: "center",
+              verticalAlign: "middle",
+              rotate: Math.atan2(y, x) + Math.PI / 2,
+              formatter: function (params) {
+                return params.data.name.split("").join("\n"); // 名字中的每个字符换行显示
+              },
+              fontSize: 14,
+              color: "#000",
+            },
+          });
         }
       }
 
@@ -67,9 +86,11 @@ export default {
             show: true,
             position: "bottom",
             distance: 20, // 标签与点的距离，增加距离使标签向下移动
-            rotate: -90, // 旋转标签，使标签垂直于点
-            formatter: "{b}", // 显示名称
-            fontSize: 10, // 字体大小
+            formatter: function (params) {
+              const name = params.data.name;
+              return name.split("").join("\n");
+            },
+            fontSize: 14, // 字体大小
             color: "#000", // 字体颜色
           },
         });
@@ -95,7 +116,7 @@ export default {
         series: [
           {
             type: "scatter",
-            symbolSize: 10,
+            symbolSize: 20,
             itemStyle: {
               color: "#000",
             },
@@ -128,6 +149,25 @@ export default {
                 },
               },
             })),
+          },
+          {
+            type: "scatter",
+            symbol: "none", // 不显示点，只显示文本
+            label: {
+              show: true,
+              formatter: (params) => {
+                return params.data.name;
+              },
+              position: "right",
+              align: "center",
+              verticalAlign: "middle",
+              rotate: (params) => {
+                return params.data.rotation * (180 / Math.PI); // 角度转换为度
+              },
+              fontSize: 14,
+              color: "#000",
+            },
+            data: textData,
           },
         ],
         xAxis: { show: false },

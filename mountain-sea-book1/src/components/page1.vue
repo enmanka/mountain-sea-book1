@@ -1,7 +1,7 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="300px">
+          <el-aside width="400px">
               <el-header>
                 <index1/>
               </el-header>
@@ -63,7 +63,6 @@ export default{
 
 
     .el-container{
-    margin-left: 30px;
     height: 100%;
     .el-aside{
       .el-header{
