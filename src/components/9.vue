@@ -13,7 +13,7 @@
       <option v-for="node in allNodeNames" :value="node">{{ node }}</option>
     </select>
     <!-- 关系图 -->
-    <div ref="chart" style="width: 100%; height: 600px"></div>
+    <div ref="chart" style="width: 100%; height: 700px"></div>
   </div>
 </template>
 
@@ -61,18 +61,21 @@ export default {
 
         // 设置图表配置项
         var option = {
-          title: {
-            text: "Les Miserables",
-            subtext: "Circular layout",
-            top: "bottom",
-            left: "right",
-          },
+          // 去掉标题部分
+          // title: {
+          //   text: "Les Miserables",
+          //   subtext: "Circular layout",
+          //   top: "bottom",
+          //   left: "right",
+          // },
           tooltip: {},
           legend: [
             {
               data: graphData.categories.map(function (a) {
                 return a.name;
               }),
+              orient: "vertical",
+              x: "left", //可设定图例在左、右、居中
             },
           ],
           animationDurationUpdate: 1500,
@@ -90,6 +93,7 @@ export default {
               categories: graphData.categories,
               roam: true,
               label: {
+                show: true, // 显示所有节点的标签
                 position: "right",
                 formatter: "{b}",
               },
@@ -122,6 +126,9 @@ export default {
           name: "Node " + (i + 1),
           symbolSize: Math.random() * 30 + 40, // 随机大圆点大小
           category: Math.floor(Math.random() * 3), // 随机分类
+          label: {
+            show: true, // 显示大圆点的标签
+          },
         });
 
         // 生成小圆点
@@ -139,6 +146,9 @@ export default {
             y:
               Math.sin((j / 5) * 2 * Math.PI) * (nodes[i].symbolSize + 10) +
               nodes[i].y, // 小圆点位置
+            label: {
+              show: true, // 显示小圆点的标签
+            },
           });
         }
       }
