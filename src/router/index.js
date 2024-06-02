@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHashHistory, createRouter } from "vue-router";
 import DefaultComponent from '../components/first.vue';
 import Vue1 from '../components/1.vue';
 import Vue2 from '../components/2.vue';
@@ -16,6 +16,7 @@ import shan from '../components/page1.vue';
 import page2 from '../components/page2.vue';
 import page3 from '../components/page3.vue';
 import page4 from '../components/page4.vue';
+
 const routes = [
     { path: '/', component: DefaultComponent },
     { path: '/main', component: Main },
@@ -33,7 +34,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 });
 

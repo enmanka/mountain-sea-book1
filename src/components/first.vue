@@ -11,9 +11,9 @@
 export default {
   data() {
     return {
-      biaoTiSrc: "src/img/main/帝禹洪荒.png",
-      muLuSrc: "src/img/main/目录框.png",
-      muLuSmallSrc: "src/img/main/小标题.png",
+      biaoTiSrc: "../img/main/帝禹洪荒.png",
+      muLuSrc: "../img/main/目录框.png",
+      muLuSmallSrc: "../img/main/小标题.png",
       buttonClass11: "c01",
       buttonClass22: "c02",
       buttonClass33: "c03",
@@ -32,7 +32,7 @@ export default {
 <style>
 #first {
   /* 设置背景图片 */
-  background-image: url("src/img/first/主界面1.png");
+  background-image: url("../img/first/主界面1.png");
 
   /* 设置背景图片覆盖整个元素 */
   background-size: 100% 100%;
@@ -53,7 +53,7 @@ export default {
   position: relative; /* 添加相对定位 */
 }
 .c01 {
-  background-image: url("src/img/first/目录一.png");
+  background-image: url("../img/first/目录一.png");
   background-size: cover; /* 确保图片覆盖整个按钮 */
   background-position: center; /* 图片居中显示 */
   /* 设置透明背景颜色 */
@@ -73,7 +73,7 @@ export default {
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c02 {
-  background-image: url("src/img/first/目录二.png");
+  background-image: url("../img/first/目录二.png");
   background-size: cover; /* 确保图片覆盖整个按钮 */
   background-position: center; /* 图片居中显示 */
   width: 4vw;
@@ -91,7 +91,7 @@ export default {
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c03 {
-  background-image: url("src/img/first/目录三.png");
+  background-image: url("../img/first/目录三.png");
   background-size: cover; /* 确保图片覆盖整个按钮 */
   background-position: center; /* 图片居中显示 */
   width: 4vw;
@@ -109,7 +109,7 @@ export default {
   cursor: pointer; /* 鼠标悬停时变为手型 */
 }
 .c04 {
-  background-image: url("src/img/first/目录四.png");
+  background-image: url("../img/first/目录四.png");
   background-size: cover; /* 确保图片覆盖整个按钮 */
   background-position: center; /* 图片居中显示 */
   width: 4vw;
