@@ -1,156 +1,123 @@
 <template>
-  <div :id="chartId"></div>
-  <img src="../img/1/山海经分为.png" class="pic" />
+  <div id="chartId"></div>
 </template>
 
 <script>
 import * as d3 from "d3";
+
 export default {
   data() {
     return {
-      alphabet: [], // 初始化为空数组
-      chartId: "chartContainer",
+      data: [
+        { nam: "南山经", fre: 6175 },
+        { nam: "西山经", fre: 15272 },
+        { nam: "东山经", fre: 13583 },
+        { nam: "北山经", fre: 6755},
+        { nam: "中山经", fre: 10357 },
+      ],
     };
   },
   mounted() {
-    this.generateAlphabetData(); // 在组件挂载后生成数据
-    this.createChart(); // 生成图表
+    this.createChart();
   },
   methods: {
-    goPage(path) {
-      this.$router.push(path);
-      //console.log(this.$router.push(path));
-    },
-    generateAlphabetData() {
-      const alphabet = ["铜", "金", "玉石", "铁", "银"];
-      const frequent = [0.2, 0.3, 0.1, 0.2, 0.2];
-      const data = [];
-
-      for (let i = 0; i < alphabet.length; i++) {
-        const letter = alphabet[i];
-        const frequency = frequent[i];
-        data.push({ letter, frequency });
-      }
-
-      this.alphabet = data; // 将生成的数据赋值给组件的alphabet属性
-    },
     createChart() {
+      const data = this.data;
+
       // 定义自定义颜色数组
-      const customColors = [
-        "#A9D8B3",
-        "#D8959C",
-        "#D4C7E7",
-        "#578FD1",
-        "#BBDFF0",
-      ];
+      const customColors = ["#A9D8B3", "#D8959C", "#D4C7E7", "#578FD1", "#BBDFF0"];
 
       // 定义颜色比例尺，将自定义颜色数组作为范围
       const colorScale = d3
         .scaleOrdinal()
-        .domain(this.alphabet.map((d) => d.letter))
+        .domain(data.map((d) => d.nam))
         .range(customColors);
 
-      const barHeight = 25;
-      const marginTop = 30;
-      const marginRight = 40; // 增加右边距，确保有空间显示标签
-      const marginBottom = 10;
-      const marginLeft = 30;
-      const width = 250;
-      const height =
-        Math.ceil((this.alphabet.length + 0.1) * barHeight) +
-        marginTop +
-        marginBottom;
+      const margin = { top: 30, right: 10, bottom: 30, left: 50 };
+      const width = 400 - margin.left - margin.right;
+      const height = 250 - margin.top - margin.bottom;
+
+      // 选择目标元素并添加SVG
+      const svg = d3
+        .select("#chartId")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       const x = d3
         .scaleLinear()
-        .domain([0, d3.max(this.alphabet, (d) => d.frequency)])
-        .range([marginLeft, width - marginRight]);
+        .domain([0, 16000])
+        .range([0, width]);
 
       const y = d3
         .scaleBand()
-        .domain(
-          d3.sort(this.alphabet, (d) => -d.frequency).map((d) => d.letter)
-        )
-        .rangeRound([marginTop, height - marginBottom])
+        .domain(data.map((d) => d.nam))
+        .range([0, height])
         .padding(0.1);
 
-      const format = x.tickFormat(20, "%");
+      const format = d3.format(".0f");
 
-      const svg = d3
-        .select(`#${this.chartId}`)
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [0, 0, width, height])
-        .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
-
-      const bars = svg
+      // 为每个柱子设置填充颜色
+      svg
         .append("g")
         .selectAll("rect")
-        .data(this.alphabet)
+        .data(data)
         .join("rect")
-        .attr("x", x(0))
-        .attr("y", (d) => y(d.letter))
-        .attr("width", (d) => x(d.frequency) - x(0))
+        .attr("x", 0)
+        .attr("y", (d) => y(d.nam))
+        .attr("width", (d) => x(d.fre))
         .attr("height", y.bandwidth())
-        .attr("fill", (d) => colorScale(d.letter))
-        .on("mouseover", function (event, d) {
-          d3.select(this).attr("fill", "orange");
-
-          // 确保标签显示在条形图范围外
-          svg
-            .append("text")
-            .attr("class", "hover-label")
-            .attr("x", Math.max(x(d.frequency) + 5, marginLeft + 5)) // 右边超出时，显示在条形图内
-            .attr("y", y(d.letter) + y.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .attr("fill", "black")
-            .attr("text-anchor", "start")
-            .text(`${d.letter}: ${format(d.frequency)}`);
-        })
-        .on("mouseout", function (event, d) {
-          d3.select(this).attr("fill", colorScale(d.letter));
-
-          svg.selectAll(".hover-label").remove();
-        });
+        .attr("fill", (d) => colorScale(d.nam));
 
       svg
         .append("g")
         .attr("fill", "white")
         .attr("text-anchor", "end")
         .selectAll("text")
-        .data(this.alphabet)
+        .data(data)
         .join("text")
-        .attr("x", (d) => x(d.frequency))
-        .attr("y", (d) => y(d.letter) + y.bandwidth() / 2)
+        .attr("x", (d) => x(d.fre))
+        .attr("y", (d) => y(d.nam) + y.bandwidth() / 2)
         .attr("dy", "0.35em")
         .attr("dx", -4)
-        .text((d) => format(d.frequency))
+        .text((d) => format(d.fre))
         .call((text) =>
           text
-            .filter((d) => x(d.frequency) - x(0) < 20) // short bars
-            .attr("dx", +4)
+            .filter((d) => x(d.fre) < 20) // 短柱子的文本调整
+            .attr("dx", 4)
             .attr("fill", "black")
             .attr("text-anchor", "start")
         );
 
       svg
         .append("g")
-        .attr("transform", `translate(0,${marginTop})`)
-        .call(d3.axisTop(x).ticks(0).tickSize(0).tickFormat(""))
-        .call((g) => g.select(".domain").remove());
+        .attr("transform", `translate(0,0)`)
+        .call(d3.axisTop(x).ticks(8));
 
       svg
         .append("g")
-        .attr("transform", `translate(${marginLeft},0)`)
-        .call(d3.axisLeft(y).tickSizeOuter(0));
+        .call(d3.axisLeft(y).tickSize(0))
+        .call((g) => g.select(".domain").remove())
+        .selectAll("text")
+        .style("font-size", "13px");
+     
+      svg.append("text")
+      .attr("text-anchor", "end")
+      .attr("x", width)
+      .attr("y", height+28)
+      .text("山海经各篇目总字数")
+      .style("font-family","FangSong")
+      .style("font-size","18px")
     },
   },
 };
 </script>
 
-<style scoped>
-.pic {
-  padding-top: 300px;
+<style scoped lang="less">
+#chartId {
+  width: 100%;
+  height: auto;
 }
 </style>

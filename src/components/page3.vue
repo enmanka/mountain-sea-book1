@@ -1,47 +1,52 @@
 <template>
-    <div class="img1">
-        <el-container>
-          <el-aside width="400px">
-              <el-header><index3/></el-header>
-              <el-main>
-              </el-main>
-          </el-aside>
+  <div class="img1">
+    <el-container>
+      <el-container>
+        <el-aside width="500px">
+          <el-header>
+            <img src="../img/3/神话人物及其分类.png" />
+          </el-header>
+          <el-main>
+            <pic11 />
+          </el-main>
+        </el-aside>
 
-          <el-container >
-            <el-header class="head2">
-              <img src="../img/3/神话人物及其分类.png">
-            </el-header>
-            <el-main>
-              <figure3></figure3>
-            </el-main>
-          </el-container>
-
-        </el-container>
-      </div>
-
-  </template>
+        <el-aside width="700px">
+          <el-header>
+            <img src="../img/3/氏族信息.png" />
+          </el-header>
+          <el-main>
+            <pic9 />
+          </el-main>
+        </el-aside>
+      </el-container>
+    </el-container>
+  </div>
+</template>
   
 
 
 <script>
-import index3 from './index3.vue';
-import figure3 from './figure3.vue';
-// import figure12 from './figure12.vue';
-export default{
-    data()
-    {return{
-
-    }},
-    components:{
-      index3,
-      figure3,
+import index3 from "./index3.vue";
+import figure3 from "./figure3.vue";
+import pic11 from "./11.vue";
+import pic9 from "./9.vue";
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    index3,
+    figure3,
+    pic11,
+    pic9,
     //   figure12,
-    },
-}
+  },
+};
 </script>
 
 <style lang="less">
-.img1{
+.img1 {
   /* 设置背景图片 */
   background-image: url("src/img/1/background.png");
 
@@ -57,21 +62,19 @@ export default{
   margin: 0;
   padding: 0%;
 
-
-    .el-container{
+  .el-container {
     height: 100%;
-    .el-aside{
-      .el-header{
+    .el-aside {
+      .el-header {
         height: 200px;
       }
     }
-    .el-container{
-      .el-header{
+    .el-container {
+      margin-top: 20px;
+      .el-header {
         height: 50px;
       }
     }
   }
 }
-
-
 </style>

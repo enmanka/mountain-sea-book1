@@ -1,23 +1,24 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="400px">
-              <el-header>
-                <index1/>
-              </el-header>
+          <el-aside>
+            <el-header>
+              <img src="../img/1/山海经分为.png" class="pic">
+            </el-header>
 
               <el-main>
-                <figure11></figure11>
+                <figure11/>
               </el-main>
+
           </el-aside>
 
           <el-container >
             <el-header class="head2">
               <img src="../img/1/山海经整体信息.png">
             </el-header>
-            
+
             <el-main>
-              <figure14/>
+              <figure13/>
             </el-main>
           </el-container>
 
@@ -31,9 +32,8 @@
 <script>
 import index1 from './index1.vue';
 import figure11 from './figure11.vue';
-import figure12 from './figure12.vue';
+import figure13 from './figure13.vue';
 import figure14 from './figure14.vue';
-import figure15 from './figure15.vue';
 export default{
     data()
     {return{
@@ -42,9 +42,8 @@ export default{
     components:{
       index1,
       figure11,
-      figure12,
+      figure13,
       figure14,
-      figure15
     },
 }
 </script>
@@ -63,17 +62,28 @@ export default{
 
 
     .el-container{
+    margin-left: 30px;
     height: 100%;
-    .el-aside{
-      .el-header{
-        height: 100px;
+      .el-aside{
+        width: 430px;
+        padding:0;
+        .el-header{
+          height: 330px;
+          padding: 50px;
+        }
+        .el-main{
+          width: 400px;
+          padding-top: 50px;
+          padding-left: 0%;
+          padding-right: 0;
+        }
       }
-    }
-    .el-container{
-      .el-header{
-        height: 50px;
+      .el-container{
+
+        .el-main{
+          padding-left: 0%;
+        }
       }
-    }
   }
 }
 

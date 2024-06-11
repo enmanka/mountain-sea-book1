@@ -142,9 +142,12 @@ export default {
     const height = 928; // 图形高度
     const radius = width / 6; // 半径
 
-    const color = d3.scaleOrdinal(
-      d3.quantize(d3.interpolateRainbow, data.children.length + 1)
-    );
+    // const color = d3.scaleOrdinal(
+    //   d3.quantize(d3.interpolateRainbow, data.children.length + 1)
+    // );
+    const customColors = ["#A2CD5A","#FFD700","#EEB4B4","#87CEEB","#9BCD9B",];
+    const color = d3.scaleOrdinal(customColors);
+
 
     const hierarchy = d3
       .hierarchy(data)
@@ -181,7 +184,7 @@ export default {
         return color(d.data.name);
       })
       .attr("fill-opacity", (d) =>
-        arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0
+        arcVisible(d.current) ? (d.children ? 0.7 : 0.5) : 0
       )
       .attr("pointer-events", (d) => (arcVisible(d.current) ? "auto" : "none"))
       .attr("d", (d) => arc(d.current))
@@ -348,5 +351,8 @@ export default {
   border-radius: 5px;
   pointer-events: none;
   display: none;
+}
+#chart-container{
+  padding-left: 100px;
 }
 </style>

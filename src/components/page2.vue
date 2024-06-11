@@ -1,19 +1,20 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="400px">
-              <el-header><index2/></el-header>
-              <el-main>
-              </el-main>
-          </el-aside>
 
           <el-container >
             <el-header class="head2">
               <img src="../img/2/生物特性及功效.png">
             </el-header>
-            <el-main>
+
+              <el-aside width="600px" class="f1">
                 <figure2></figure2>
-            </el-main>
+              </el-aside>
+
+              <el-aside width="600px">
+                <img src="../img/1/山海经分为.png" class="f2">
+              </el-aside>
+              
           </el-container>
 
         </el-container>
@@ -26,6 +27,7 @@
 <script>
 import index2 from './index2.vue';
 import figure2 from './figure2.vue';
+import figure21 from './figure21.vue';
 export default{
     data()
     {return{
@@ -34,11 +36,12 @@ export default{
     components:{
       index2,
       figure2,
+      figure21,
     },
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .img1{
   /* 设置背景图片 */
   background-image: url("src/img/1/background.png");
@@ -57,19 +60,31 @@ export default{
 
 
     .el-container{
-    height: 100%;
-    .el-aside{
-      .el-header{
-        height: 200px;
+      height: 100%;
+      .el-aside{
+        .el-header{
+          height: 200px;
+        }
       }
-    }
-    .el-container{
-      .el-header{
-        height: 50px;
+      .el-container{
+        .el-header{
+          height: 50px;
+        }
+        // .el-main{
+        //   background-image: url("src/img/bg2.png");
+        //   background-size: cover;
+        //   background-position: center;
+        //   height: 100vh; /* 视口高度 */
+        //   width: 100vw; /* 视口宽度 */
+        //   margin: 0;
+        //   padding: 0%;
+
+        // }      
+        .f2{
+          padding-left: 80px;
+          padding-top: 50px;
+        }
       }
     }
   }
-}
-
-
 </style>

@@ -1,14 +1,20 @@
 <template>
-  <div ref="chart" style="width: 150%; height: 600px; left: -150px"></div>
+  <div ref="chart" style="width: 800px; height: 500px; left: -160px"></div>
 </template>
 
 <script>
 import * as echarts from "echarts/core";
 import { ScatterChart, LinesChart } from "echarts/charts";
 import { SVGRenderer } from "echarts/renderers";
-import { TitleComponent } from "echarts/components";
+import { TitleComponent, TooltipComponent } from "echarts/components";
 
-echarts.use([ScatterChart, LinesChart, SVGRenderer, TitleComponent]);
+echarts.use([
+  ScatterChart,
+  LinesChart,
+  SVGRenderer,
+  TitleComponent,
+  TooltipComponent,
+]);
 
 export default {
   mounted() {
@@ -19,13 +25,36 @@ export default {
       const chartDom = this.$refs.chart;
       const myChart = echarts.init(chartDom);
 
-      const circleCount = 15; // 上半圆小圆数量
+      const circleCount = 13; // 上半圆小圆数量
       const circleCount1 = 5; // 下边缘小圆数量
-      const bottomCircleCount = 15; // 底部小圆数量
+      const bottomCircleCount = 13; // 底部小圆数量
 
       const circleData = [];
       const lineData = [];
       const textData = [];
+      const start = ["鼓", "祝融", "共工", "颛顼", "应龙"];
+      const end = [
+        ["烛九阴", "葆江", "黄帝", "钦䲹"],
+        ["炎帝", "听沃", "炎居", "节并", "戏器"],
+        ["炎帝", "听沃", "炎居", "节并", "戏器"],
+        ["黄帝", "昌意", "韩流"],
+        ["黄帝", "蚩尤", "大禹"],
+      ];
+      const nameEnd = [
+        "烛九阴",
+        "葆江",
+        "黄帝",
+        "钦䲹",
+        "炎帝",
+        "听沃",
+        "炎居",
+        "节并",
+        "戏器",
+        "昌意",
+        "韩流",
+        "蚩尤",
+        "大禹",
+      ];
 
       // 生成半圆上半部分的小圆数据
       for (let i = 0; i < circleCount; i++) {
@@ -33,19 +62,20 @@ export default {
         const x = 3 * Math.cos(angle);
         const y = 3 * Math.sin(angle);
 
+        //显示文本
         if (y >= 0) {
-          const textX = x * 1.2; // 调整文本位置，放在小圆外面
+          const textX = x * 1.2; // 调整文本位置，沿着圆心连接线延伸
           const textY = y * 1.2;
           circleData.push({
             value: [x, y],
             index: i,
-            name: `小圆${i}`,
+            name: nameEnd[i],
             label: {
-              show: true,
+              show: false,
               position: [textX, textY],
               align: "center",
               verticalAlign: "middle",
-              rotate: Math.atan2(y, x) + Math.PI / 2,
+              rotate: Math.atan2(y, x) * (180 / Math.PI) - 90, // 修改旋转角度
               formatter: function (params) {
                 return params.data.name.split("").join("\n"); // 名字中的每个字符换行显示
               },
@@ -61,27 +91,34 @@ export default {
 
       for (let i = 0; i < circleCount1; i++) {
         const x = -3 + (6 * i) / (circleCount1 - 1); // 在 x 轴上均匀分布小圆
-        circleData.push({
+        const circle = {
           value: [x, bottomY],
           index: circleCount + i,
-          name: `BottomCircle${i}`,
-        });
+          name: start[i],
+        };
+        circleData.push(circle);
 
-        // 将下边缘的小圆与上半圆的某个点连接
-        const upperIndex = Math.floor(Math.random() * circleCount); // 随机选择上半圆的一个点
-        lineData.push([
-          { value: [x, bottomY], index: circleCount + i }, // 下边缘的小圆作为起点
-          circleData[upperIndex], // 上半圆的某个点作为终点
-        ]);
+        // 修改此部分逻辑，使下边缘小圆名字为start[i]的和上半圆小圆中名字和end的第i行相同的那些小圆相连
+        end[i].forEach((endName) => {
+          const upperIndex = circleData.findIndex(
+            (d) => d.name === endName && d.index < circleCount
+          );
+          if (upperIndex !== -1) {
+            lineData.push([
+              { value: [x, bottomY], index: circleCount + i }, // 下边缘的小圆作为起点
+              circleData[upperIndex], // 上半圆中名字和end的第i行相同的点作为终点
+            ]);
+          }
+        });
       }
 
       // 在底部均匀排列小圆
       for (let i = 0; i < bottomCircleCount; i++) {
         const x = -3 + (6 * i) / (bottomCircleCount - 1); // 在 x 轴上均匀分布底部小圆
-        circleData.push({
+        const bottomCircle = {
           value: [x, -2],
           index: circleCount + circleCount1 + i,
-          name: `小圆${i}`,
+          name: nameEnd[i],
           label: {
             show: true,
             position: "bottom",
@@ -93,23 +130,26 @@ export default {
             fontSize: 14, // 字体大小
             color: "#000", // 字体颜色
           },
-        });
+        };
+        circleData.push(bottomCircle);
 
-        // 随机选择底部小圆和下边缘小圆之间连线
-        const bottomCircleIndex = circleCount + circleCount1 + i;
-        const bottomEdgeCircleIndex =
-          circleCount + Math.floor(Math.random() * circleCount1);
-        lineData.push([
-          {
-            value: circleData[bottomCircleIndex].value,
-            index: bottomCircleIndex,
-          },
-          {
-            value: circleData[bottomEdgeCircleIndex].value,
-            index: bottomEdgeCircleIndex,
-            hidden: true, // 默认隐藏
-          },
-        ]);
+        // 修改此部分逻辑，使下边缘小圆名字为start[i]的和底部小圆中名字和end的第i行相同的那些小圆相连
+        start.forEach((startName, index) => {
+          if (bottomCircle.name && end[index].includes(bottomCircle.name)) {
+            const bottomEdgeCircleIndex = circleCount + index;
+            lineData.push([
+              {
+                value: bottomCircle.value,
+                index: bottomCircle.index,
+              },
+              {
+                value: circleData[bottomEdgeCircleIndex].value,
+                index: bottomEdgeCircleIndex,
+                hidden: true, // 默认隐藏
+              },
+            ]);
+          }
+        });
       }
 
       const option = {
@@ -173,7 +213,22 @@ export default {
         xAxis: { show: false },
         yAxis: { show: false },
         grid: { top: "center", left: "center", height: "50%" },
-        tooltip: { show: false },
+        //小黑框
+        tooltip: {
+          trigger: "item",
+          backgroundColor: "#000", // 背景颜色为黑色
+          textStyle: {
+            color: "#fff", // 文字颜色为白色
+          },
+          formatter: function (params) {
+            if (
+              params.seriesType === "scatter" &&
+              params.data.index < circleCount + circleCount1
+            ) {
+              return params.data.name; // 只显示上半圆小圆的名称
+            }
+          },
+        },
         legend: { show: false },
       };
 

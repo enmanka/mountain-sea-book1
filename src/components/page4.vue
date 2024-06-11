@@ -1,11 +1,6 @@
 <template>
     <div class="img1">
         <el-container>
-          <el-aside width="400px">
-              <el-header><index4/></el-header>
-              <el-main>
-              </el-main>
-          </el-aside>
 
           <el-container >
             <el-header class="head2">
@@ -25,7 +20,7 @@
 
 <script>
 import index4 from './index4.vue';
-import figure4 from './figure4.vue';
+import figure4 from './f4.vue';
 // import figure12 from './figure12.vue';
 export default{
     data()
