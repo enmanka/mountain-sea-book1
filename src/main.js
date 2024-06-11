@@ -12,3 +12,5 @@ app.use(ElementPlus) // 将 element 组件全局注册
 app.use(router) // 注册路由实例
 
 app.mount('#app')
+
+console.log('App mounted with router:', router)
